@@ -1,0 +1,3 @@
+[submodule "Assets/Stock Assets/Hydrogen"]
+	path = Assets/Stock Assets/Hydrogen
+	url = https://github.com/dotBunny/Hydrogen.git
