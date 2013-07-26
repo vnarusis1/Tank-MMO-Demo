@@ -22,7 +22,6 @@ public class Tank : Photon.MonoBehaviour  {
 		AIPlayer = 2 // This could be fun to have some ai players on a local machine broadcasting to server
 	}
 	
-	public bool canControlCamera = false;
 	public bool canDrive = false;
 	public bool canFire = false;
 
@@ -39,7 +38,6 @@ public class Tank : Photon.MonoBehaviour  {
 	/// </summary> 
 	public TankMode mode = TankMode.LocalPlayer;
 	
-	public TankCameraController cameraController;	
 	public TankTracksController tracksController;
 	public TankTowerController towerController;
 	public TankFixedGunController[] fixedGunsControllers;
@@ -100,7 +98,6 @@ public class Tank : Photon.MonoBehaviour  {
 		// Force assignment of base level controllers
 		if ( tracksController == null ) Debug.LogError("No Track Controller was set on Tank script.");
 		if ( towerController == null ) Debug.LogError("No Tower Controller was set on Tank script.");
-		if ( cameraController == null ) Debug.LogError("No Camera Controller was set on Tank script.");
 		
 		rigidbody.centerOfMass = centerOfMass.localPosition;
 		
@@ -113,7 +110,6 @@ public class Tank : Photon.MonoBehaviour  {
 	{
 		// Configure sub controllers for reference back to parent
 		// - this is handy if they are not on the same gameObject
-		cameraController.ParentTank = this;
 		towerController.ParentTank = this;
 		
 		if ( fixedGunsControllers.Length > 0 )
@@ -158,13 +154,12 @@ public class Tank : Photon.MonoBehaviour  {
 		if ( type == TankMode.LocalPlayer )
 		{
 			canDrive = true;
-			canControlCamera = true;
+			
 			canFire = true;
 		}
 		else if ( type == TankMode.RemotePlayer )
 		{
 			canDrive = false;
-			canControlCamera = false;
 			canFire = false;
 		}
 		mode = type;
@@ -202,7 +197,7 @@ public class Tank : Photon.MonoBehaviour  {
 	
 	void LateUpdate() 
 	{
-		if ( canControlCamera ) 
+		/*if ( canControlCamera ) 
 		{
 			if ( cameraController.mode == TankCameraController.CameraMode.MouseOrbitTarget)
 			{
@@ -213,7 +208,7 @@ public class Tank : Photon.MonoBehaviour  {
 				cameraController.ManualAim(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
 			}
 			
-		}
+		}*/
 	}
 	
 	void FixedUpdate(){

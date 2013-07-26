@@ -164,24 +164,5 @@ public class TankTowerController : MonoBehaviour {
 		TargetRotation += adjustment;
 	}
 	#endregion
-	
-	
-	/*
-	
-	public static Quaternion RotateTowards(Quaternion source, Quaternion target, float maxAngle)
-
-{
-
-    float targetAngle = Quaternion.Angle(source, target);
-
-    if (targetAngle < maxAngle)
-
-        return target;
-
-    else
-
-        return Quaternion.Slerp(source, target, maxAngle / targetAngle);
-
-}*/
 }
 

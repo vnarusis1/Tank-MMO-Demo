@@ -6,18 +6,24 @@ public class DemoManager : Photon.MonoBehaviour
 	public Transform tankPrefab;
 	public Transform[] spawnPoints;
 	public Transform targetPoint;
-
+	
+	
 	public UILabel statusLabel;
 	public UILabel healthLabel;
 	public UISprite crosshair;
+	public CameraManager cameraManager;
+	
 	
 	[System.NonSerialized]
 	public GameObject playerTank;
 	public Tank playerScript;
 	
+	
+	
 	public float pingTimer = 5f;
 	private float _nextPing = 0f;
 	private int _ping = 0;
+	
 	
 	private Vector3 currentMousePosition;
 	private Ray targetRay;
@@ -70,13 +76,14 @@ public class DemoManager : Photon.MonoBehaviour
 		
 		if ( playerScript != null ) 
 		{
-			if ( playerScript.cameraController.mode == TankCameraController.CameraMode.LookingDownSights )
+			if ( cameraManager.mode == CameraManager.Mode.LookingDownSights )
 			{
 				crosshair.enabled = true;
 				targetPoint.gameObject.SetActive(false);
 			}
 			else
 			{
+				
 				crosshair.enabled = false;
 				targetPoint.gameObject.SetActive(true);
 				
@@ -84,7 +91,7 @@ public class DemoManager : Photon.MonoBehaviour
 				if ( playerScript != null )
 				{
 		
-					targetRay = playerScript.cameraController.TargetCamera.ScreenPointToRay(Input.mousePosition);
+					targetRay = cameraManager.TargetCamera.ScreenPointToRay(Input.mousePosition);
 		
 					if (Physics.Raycast(targetRay, out targetRayHit, 
 						float.PositiveInfinity,
@@ -146,14 +153,13 @@ public class DemoManager : Photon.MonoBehaviour
 		{
 			if ( playerScript != null )
 			{
-				if ( playerScript.cameraController.mode == TankCameraController.CameraMode.LookingDownSights )
+				if ( cameraManager.mode == CameraManager.Mode.LookingDownSights )
 				{
-					playerScript.cameraController.mode = TankCameraController.CameraMode.MouseOrbitTarget;
+					cameraManager.mode = CameraManager.Mode.MouseOrbitTarget;
 				}
 				else
 				{
-					playerScript.cameraController.mode = TankCameraController.CameraMode.LookingDownSights;
-					
+					cameraManager.mode = CameraManager.Mode.LookingDownSights;	
 				}
 			}
 		}
@@ -168,7 +174,19 @@ public class DemoManager : Photon.MonoBehaviour
 		#endregion
 				
 	}
+	public void LateUpdate()	
+	{
 
+			if ( cameraManager.mode == CameraManager.Mode.MouseOrbitTarget)
+			{
+				cameraManager.UpdateCamera(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
+			}
+			else
+			{
+			//	cameraManager.ManualAim(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
+			}
+
+	}
 	/// <summary>
 	/// An extremely simple network setup
 	/// </summary>
@@ -218,6 +236,7 @@ public class DemoManager : Photon.MonoBehaviour
 			playerTank = newPlayer.gameObject;
 			playerScript = newPlayer.GetComponent<Tank>();
 			playerScript.SetTankType(Tank.TankMode.LocalPlayer);
+			cameraManager.orbit = newPlayer.gameObject.transform;
 		}
 		else
 		{
