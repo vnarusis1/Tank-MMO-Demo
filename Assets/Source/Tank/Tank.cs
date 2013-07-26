@@ -4,6 +4,17 @@ using System.Collections;
 // Serves as the hull reference
 public class Tank : Photon.MonoBehaviour  {
 	
+	#region Enumerations
+	public enum RotatableAxis
+	{
+		X = 0,
+		Y = 1,
+		Z = 2,
+		XY = 3,
+		XZ = 4,
+		YZ = 5
+	}
+	#endregion
 	
 	public enum TankMode {
 		LocalPlayer = 0,
@@ -16,7 +27,16 @@ public class Tank : Photon.MonoBehaviour  {
 	public bool canFire = false;
 
 	public Transform centerOfMass;
-
+	
+	
+	
+	public Transform manualView;
+	
+	
+	
+	/// <summary>
+	/// This is the tanks mode of operation, LocalPlayer vs NetworkPlayer
+	/// </summary> 
 	public TankMode mode = TankMode.LocalPlayer;
 	
 	public TankCameraController cameraController;	
@@ -37,16 +57,26 @@ public class Tank : Photon.MonoBehaviour  {
 	private Quaternion _networkedRotation;
 	
 	
-	public Vector3 TargetPoint
+	/// <summary>
+	/// Gets or sets the targeted world position.
+	/// </summary>
+	/// <value>
+	/// The targeted world position.
+	/// </value>
+	public Vector3 TargetedWorldPosition
 	{
 		get
 		{
-			return _targetPoint;
+			return _targetedWorldPosition;
 		}
 		set
 		{
-			_targetPoint = value;
-			towerController.UpdateTarget(value);
+			// Set local referrence just incase we need to reference this later
+			_targetedWorldPosition = value;
+			
+			
+			towerController.UpdateTargetRotationFromWorldPosition(value);
+			
 			if ( fixedGunsControllers.Length > 0 )
 			{
 				for ( int x = 0; x < fixedGunsControllers.Length; x++ )
@@ -57,7 +87,13 @@ public class Tank : Photon.MonoBehaviour  {
 			
 		}
 	}
-	private Vector3 _targetPoint;
+	private Vector3 _targetedWorldPosition;
+	
+	public Vector3 ForwardVector
+	{
+		get {  return transform.rotation * Vector3.forward; }
+	}
+	
 	
 	public void Awake()
 	{
@@ -77,7 +113,9 @@ public class Tank : Photon.MonoBehaviour  {
 	{
 		// Configure sub controllers for reference back to parent
 		// - this is handy if they are not on the same gameObject
+		cameraController.ParentTank = this;
 		towerController.ParentTank = this;
+		
 		if ( fixedGunsControllers.Length > 0 )
 		{
 			for ( int x = 0; x < fixedGunsControllers.Length; x++ )
@@ -112,6 +150,9 @@ public class Tank : Photon.MonoBehaviour  {
 	}
 	
 	
+	
+	
+	
 	public void SetTankType(TankMode type)
 	{
 		if ( type == TankMode.LocalPlayer )
@@ -128,6 +169,10 @@ public class Tank : Photon.MonoBehaviour  {
 		}
 		mode = type;
 	}
+	
+	
+	
+	
 	
 	
 	
@@ -159,7 +204,15 @@ public class Tank : Photon.MonoBehaviour  {
 	{
 		if ( canControlCamera ) 
 		{
-			cameraController.UpdateCamera(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
+			if ( cameraController.mode == TankCameraController.CameraMode.MouseOrbitTarget)
+			{
+				cameraController.UpdateCamera(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
+			}
+			else
+			{
+				cameraController.ManualAim(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
+			}
+			
 		}
 	}
 	
@@ -240,7 +293,7 @@ public class Tank : Photon.MonoBehaviour  {
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
 			
-			stream.SendNext(towerController.NetworkRotation);
+			stream.SendNext(towerController.TowerRotation);
 		
 			if ( fixedGunsControllers.Length > 0 )
 			{
@@ -265,7 +318,7 @@ public class Tank : Photon.MonoBehaviour  {
 			_networkedPosition = (Vector3) stream.ReceiveNext();
             _networkedRotation = (Quaternion) stream.ReceiveNext();
 			
-			towerController.NetworkRotation = (float)stream.ReceiveNext();
+			towerController.TargetRotation = (float)stream.ReceiveNext();
 			
 			if ( fixedGunsControllers.Length > 0 )
 			{

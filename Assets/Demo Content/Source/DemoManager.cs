@@ -7,19 +7,17 @@ public class DemoManager : Photon.MonoBehaviour
 	public Transform[] spawnPoints;
 	public Transform targetPoint;
 
-
 	public UILabel statusLabel;
 	public UILabel healthLabel;
+	public UISprite crosshair;
 	
 	[System.NonSerialized]
 	public GameObject playerTank;
 	public Tank playerScript;
 	
-	
 	public float pingTimer = 5f;
 	private float _nextPing = 0f;
 	private int _ping = 0;
-	
 	
 	private Vector3 currentMousePosition;
 	private Ray targetRay;
@@ -27,16 +25,18 @@ public class DemoManager : Photon.MonoBehaviour
 	public LayerMask targetableLayers;
 	public Material willHit;
 	public Material wontHit;
-	
 
 	public void Start () 
 	{
 		_nextPing = pingTimer;
 		Screen.showCursor = false;
+		crosshair.enabled = false;
 	}
 	
 	public void Update()
 	{
+		
+		#region Text Updates
 		_nextPing -= Time.deltaTime;
 		if ( _nextPing <= 0 )
 		{
@@ -66,6 +66,42 @@ public class DemoManager : Photon.MonoBehaviour
 				healthLabel.text = newText;
 			}
 		}
+		#endregion
+		
+		if ( playerScript != null ) 
+		{
+			if ( playerScript.cameraController.mode == TankCameraController.CameraMode.LookingDownSights )
+			{
+				crosshair.enabled = true;
+				targetPoint.gameObject.SetActive(false);
+			}
+			else
+			{
+				crosshair.enabled = false;
+				targetPoint.gameObject.SetActive(true);
+				
+				// Targeting Update
+				if ( playerScript != null )
+				{
+		
+					targetRay = playerScript.cameraController.TargetCamera.ScreenPointToRay(Input.mousePosition);
+		
+					if (Physics.Raycast(targetRay, out targetRayHit, 
+						float.PositiveInfinity,
+						//playerScript.primaryFire.maximumTargetDistance + playerScript.cameraController.targetDistance, 
+						targetableLayers))
+					{
+						targetPoint.position = targetRayHit.point;
+						
+					}
+					
+					playerScript.TargetedWorldPosition = targetPoint.position;
+				}
+			}
+		}
+		
+		
+		#region User Input
 		
 		// Show Server Status
 		if ( Input.GetKeyDown(KeyCode.Tab) ) 
@@ -106,6 +142,22 @@ public class DemoManager : Photon.MonoBehaviour
 			}
 		}
 		
+		if ( Input.GetMouseButtonDown(1) )
+		{
+			if ( playerScript != null )
+			{
+				if ( playerScript.cameraController.mode == TankCameraController.CameraMode.LookingDownSights )
+				{
+					playerScript.cameraController.mode = TankCameraController.CameraMode.MouseOrbitTarget;
+				}
+				else
+				{
+					playerScript.cameraController.mode = TankCameraController.CameraMode.LookingDownSights;
+					
+				}
+			}
+		}
+		
 		
 		// Respawn
 		if ( Input.GetKeyDown(KeyCode.R) )
@@ -113,28 +165,9 @@ public class DemoManager : Photon.MonoBehaviour
 			Respawn();
 		}
 		
-		// Targeting Update
-		if ( playerScript != null )
-		{
-
-			targetRay = playerScript.cameraController.TargetCamera.ScreenPointToRay(Input.mousePosition);
-
-			if (Physics.Raycast(targetRay, out targetRayHit, 
-				float.PositiveInfinity,
-				//playerScript.primaryFire.maximumTargetDistance + playerScript.cameraController.targetDistance, 
-				targetableLayers))
-			{
-				targetPoint.position = targetRayHit.point;
-				
-			}
-			
-			playerScript.TargetPoint = targetPoint.position;
-		}
-	
+		#endregion
 				
 	}
-	
-
 
 	/// <summary>
 	/// An extremely simple network setup
@@ -155,8 +188,6 @@ public class DemoManager : Photon.MonoBehaviour
 			
 		}
     }
-	
-	
 	
 	public void SpawnPlayer()
 	{
@@ -211,6 +242,4 @@ public class DemoManager : Photon.MonoBehaviour
 	{
 		if ( NetworkInfo.Instance != null ) NetworkInfo.Instance.OnStatusUpdate -= NetworkUpdate;;
 	}
-	
-	
 }

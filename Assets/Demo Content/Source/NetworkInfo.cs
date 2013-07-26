@@ -53,8 +53,20 @@ public class NetworkInfo : MonoBehaviour
 	/// Should we reconnect to the previous room on reconnect.
 	/// </summary>
 	public bool autoRejoinRoom = true;	
+
+	/// <summary>
+	/// Was the latest disconnection forced? Meaning maybe we shouldn't reconnect
+	/// </summary>
 	private bool _forcedDisconnection = false;
+
+	/// <summary>
+	/// Our last joined room's name, useful for rejoining
+	/// </summary>
 	private string _joinedRoom = "";
+
+	/// <summary>
+	/// Connection Status
+	/// </summary>
 	private StatusType _status = StatusType.DisconnectedFromServer;
 	#endregion
 	
@@ -138,15 +150,16 @@ public class NetworkInfo : MonoBehaviour
 	
 	public void Awake ()
 	{
-		// Create a random player name for you
-		PhotonNetwork.playerName = "Player #" + Random.Range(1, 9999);
+		// Create a random player name for you, probably want to set this later
+		PlayerName = "Player #" + Random.Range(1, 9999);
+
 	}
 	
 	
 	// Use this for initialization
 	public void Start () 
 	{
-		PhotonNetwork.ConnectUsingSettings("0.1");
+		PhotonNetwork.ConnectUsingSettings(protocolVersion);
 	}
 	
 	public void OnDisable()

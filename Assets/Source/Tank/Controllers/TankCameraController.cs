@@ -20,6 +20,7 @@ public class TankCameraController : MonoBehaviour {
 	public float verticalMinimum = -20f;
 	public float verticalMaximum = 80f;
 	
+	
 	/// <summary>
 	/// Gets or sets the target camera.
 	/// </summary>
@@ -37,6 +38,14 @@ public class TankCameraController : MonoBehaviour {
 	private Camera _targetCamera;
 	private Quaternion _rotation;
 	private Vector3 _position;
+	
+	
+	private Tank _parentTank;
+	public Tank ParentTank
+	{
+		get { return _parentTank; }
+		set { _parentTank = value; }
+	}
 
 	public void Start() {
 		
@@ -63,6 +72,14 @@ public class TankCameraController : MonoBehaviour {
 			_targetCamera.transform.rotation = _rotation;
 			_targetCamera.transform.position = _position;
 		}
+	}
+	
+	public void ManualAim(float horizontalAdjustment, float verticalAdjustment)
+	{
+		_targetCamera.transform.position = _parentTank.manualView.transform.position;
+		_targetCamera.transform.rotation = _parentTank.manualView.transform.rotation;
+		
+		//ParentTank.towerController.TargetTowerAngle += (horizontalAdjustment * horizontalSpeed * 0.01f);
 	}
 	
 	private float ClampAngle(float angle, float min, float max) {

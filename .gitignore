@@ -6,3 +6,15 @@ Temp
 *.unityproj
 *.sln
 *.userprefs
+
+Assets/PRIVATE ASSETS/sfx_turretloop.wav
+
+Assets/PRIVATE ASSETS/sfx_turretstart.wav.meta
+
+Assets/PRIVATE ASSETS/sfx_turretstart.wav
+
+Assets/PRIVATE ASSETS/sfx_turretloop.wav.meta
+
+Assets/PRIVATE ASSETS/sfx_turretstop.wav
+
+Assets/PRIVATE ASSETS/sfx_turretstop.wav.meta
