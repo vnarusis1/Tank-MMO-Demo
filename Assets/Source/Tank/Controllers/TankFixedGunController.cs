@@ -9,7 +9,7 @@ public class TankFixedGunController : MonoBehaviour {
 	public float minimumAngle = -5f;
 	public float maximumTargetDistance = 20f;
 	
-	public Transform activeOrdanance;
+	public GameObject activeOrdanance;
 	public Transform spawnLocation;
 	
 	/// <summary>
@@ -102,7 +102,8 @@ public class TankFixedGunController : MonoBehaviour {
 	{
 		// Reset Reload Time
 		_reloadTime = reloadTime;
-		Transform shell = PoolManager.Pools["Weapons"].Spawn(activeOrdanance, spawnLocation.position, spawnLocation.rotation);
+		GameObject shell = hObjectPool.Instance.Spawn(activeOrdanance, spawnLocation.position, spawnLocation.rotation);
+		//Transform shell = PoolManager.Pools["Weapons"].Spawn(activeOrdanance, spawnLocation.position, spawnLocation.rotation);
 		shell.GetComponent<Ordnance>().Launch();
 		shell.GetComponent<Ordnance>().SourceTank = _parentTank;
 	}

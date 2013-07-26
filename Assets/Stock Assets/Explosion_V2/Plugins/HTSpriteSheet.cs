@@ -334,7 +334,8 @@ public class HTSpriteSheet : MonoBehaviour {
 			if ( end && pooled)
 			{
 				spawned = false;
-				PoolManager.Pools[poolName].Despawn(this.transform);
+				hObjectPool.Instance.Despawn(this.transform.gameObject);
+				//PoolManager.Pools[poolName].Despawn(this.transform);
 			}
 			
 		}

@@ -156,10 +156,14 @@ public class DemoManager : Photon.MonoBehaviour
 				if ( cameraManager.mode == CameraManager.Mode.LookingDownSights )
 				{
 					cameraManager.mode = CameraManager.Mode.MouseOrbitTarget;
+					cameraManager.TargetCamera.transform.parent = null;
 				}
 				else
 				{
 					cameraManager.mode = CameraManager.Mode.LookingDownSights;	
+					cameraManager.TargetCamera.transform.position = playerScript.manualView.transform.position;
+					cameraManager.TargetCamera.transform.rotation = playerScript.manualView.transform.rotation;
+					cameraManager.TargetCamera.transform.parent = playerScript.manualView;
 				}
 			}
 		}
@@ -176,16 +180,11 @@ public class DemoManager : Photon.MonoBehaviour
 	}
 	public void LateUpdate()	
 	{
-
-			if ( cameraManager.mode == CameraManager.Mode.MouseOrbitTarget)
-			{
-				cameraManager.UpdateCamera(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
-			}
-			else
-			{
-			//	cameraManager.ManualAim(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
-			}
-
+		cameraManager.UpdateCamera(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
+		if ( cameraManager.mode == CameraManager.Mode.LookingDownSights )
+		{
+			playerScript.towerController.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse X") * 0.75f);
+		}
 	}
 	/// <summary>
 	/// An extremely simple network setup

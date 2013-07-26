@@ -24,15 +24,19 @@ public class Ordnance : MonoBehaviour {
 	
 	public void OnCollisionEnter(Collision collision)
 	{	
-
-		_sourceTank.CreateExplosion(collision.contacts[0].point, collision.contacts[0].normal, 
-			explosionEffects[Random.Range(0, explosionEffects.Length)].name, explosionRadius, damage);
-		
-		// Remove all forces on shell
-		rigidbody.velocity = Vector3.zero;
-		rigidbody.angularVelocity = Vector3.zero;
-		
-		// Remove the shell
-		PoolManager.Pools["Weapons"].Despawn(this.transform);
+		if (SourceTank != null )
+		{
+			_sourceTank.CreateExplosion(collision.contacts[0].point, collision.contacts[0].normal, 
+				explosionEffects[Random.Range(0, explosionEffects.Length)].gameObject.name, explosionRadius, damage);
+			
+			// Remove all forces on shell
+			//rigidbody.velocity = Vector3.zero;
+			//rigidbody.angularVelocity = Vector3.zero;
+			
+			// Remove the shell - system auto handles removing forces
+			hObjectPool.Instance.Despawn(this.gameObject);
+			//PoolManager.Pools["Weapons"].Despawn(this.transform);
+		}
     }
+		
 }

@@ -221,6 +221,7 @@ public class Tank : Photon.MonoBehaviour  {
 		// Only have local tanks send out their explosions
 		if ( mode == TankMode.LocalPlayer )
 		{
+			
 			this.photonView.RPC  ("RPC_CreateExplosion",PhotonTargets.All, worldPosition, worldNormal, explosionEffect, radius, damage);
 		}
 	}
@@ -244,8 +245,14 @@ public class Tank : Photon.MonoBehaviour  {
 	{
 		
 		
+		GameObject explosion = hObjectPool.Instance.Spawn(
+			hObjectPool.Instance.GetPoolID(explosionEffect), 
+			worldPosition, Quaternion.LookRotation(worldNormal));
 		
-		Transform explosion = PoolManager.Pools["Weapons"].Spawn(PoolManager.Pools["Weapons"].prefabs[explosionEffect], worldPosition, Quaternion.LookRotation(worldNormal));
+		if ( explosion.GetComponent<HTSpriteSheet>() )
+		{
+			explosion.GetComponent<HTSpriteSheet>().OnSpawned();
+		}
 		
 		// Add Damage Radius Check for LOCAL only (this is the only fair way to do this to accomodate for lag) - though this seems
 		// like a point where the client could cheat
@@ -274,10 +281,15 @@ public class Tank : Photon.MonoBehaviour  {
 	}
 	
 	[RPC]
-	public void RPC_SpawnEffect(Transform parent, Vector3 position, Vector3 normal, Transform hitEffect)
+	public void RPC_SpawnEffect(Transform parent, Vector3 position, Vector3 normal, string hitEffect)
 	{
-		Transform effect = PoolManager.Pools["Weapons"].Spawn(hitEffect, position,Quaternion.LookRotation(normal));
-		if ( parent != null ) effect.parent = parent;
+		GameObject effect = hObjectPool.Instance.Spawn(
+			hObjectPool.Instance.GetPoolID(hitEffect), 
+			position, Quaternion.LookRotation(normal));
+		
+		
+		
+		if ( parent != null ) effect.transform.parent = parent;
 	}
 	
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

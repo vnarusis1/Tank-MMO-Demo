@@ -103,7 +103,7 @@ public class TankTowerController : MonoBehaviour {
 		else
 		{
 			// Rotate the tower to the target rotation (interpolated), smoothing out network jitter
-			tower.localEulerAngles.Set(0f, Mathf.LerpAngle(TowerRotation, TargetRotation, Time.deltaTime * 5), 0f);
+			tower.localEulerAngles = new Vector3(0f, Mathf.LerpAngle(TowerRotation, TargetRotation, Time.deltaTime * 5), 0f);
 		}
 	}
 	#endregion
