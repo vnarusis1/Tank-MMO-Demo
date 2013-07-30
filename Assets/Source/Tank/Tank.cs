@@ -4,18 +4,6 @@ using System.Collections;
 // Serves as the hull reference
 public class Tank : Photon.MonoBehaviour  {
 	
-	#region Enumerations
-	public enum RotatableAxis
-	{
-		X = 0,
-		Y = 1,
-		Z = 2,
-		XY = 3,
-		XZ = 4,
-		YZ = 5
-	}
-	#endregion
-	
 	public enum TankMode {
 		LocalPlayer = 0,
 		RemotePlayer = 1,

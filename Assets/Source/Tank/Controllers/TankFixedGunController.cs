@@ -109,4 +109,43 @@ public class TankFixedGunController : MonoBehaviour {
 	}
 	
 	
+		#region Meat & Potatoes 
+	/// <summary>
+	/// Updates the TargetRotation to face a designated world position
+	/// </summary>
+	/// <param name='worldPosition'>
+	/// World position.
+	/// </param>
+	public void UpdateTargetRotationFromWorldPosition(Vector3 worldPosition)
+	{
+
+	}
+	
+	/// <summary>
+	/// Updates the TargetRotation from a directional rotation.
+	/// </summary>
+	/// <remarks>
+	/// A camera's transform's rotation for example
+	/// </remarks>
+	/// <param name='rotation'>
+	/// Rotation.
+	/// </param>
+	public void UpdateTargetRotationFromDirectionalRotation(Quaternion rotation)
+	{
+	
+	}
+	
+	/// <summary>
+	/// Updates the TargetRotation by making adjustments based on the specified degrees.
+	/// </summary>
+	/// <param name='adjustment'>
+	/// Degree adjustment
+	/// </param>
+	public void UpdateTargetRotationByDegrees(float adjustment)
+	{
+	
+	}
+	#endregion
+	
+	
 }
