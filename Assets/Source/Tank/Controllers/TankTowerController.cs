@@ -42,6 +42,31 @@ public class TankTowerController : MonoBehaviour {
 	
 	#region Properties
 	/// <summary>
+	/// Gets a value indicating whether this <see cref="TankTowerController"/> is on target.
+	/// </summary>
+	/// <value>
+	/// <c>true</c> if is on target; otherwise, <c>false</c>.
+	/// </value>
+	public bool OnTarget
+	{
+		get { 
+			if ( TowerRotation == TargetRotation ) return true;
+			return false;
+		}
+	}
+	
+	/// <summary>
+	/// Gets the targeting difference in degrees.
+	/// </summary>
+	/// <value>
+	/// The targeting difference.
+	/// </value>
+	public float TargetingDifference
+	{
+		get { return (TargetRotation - TowerRotation); }
+	}
+	
+	/// <summary>
 	/// Gets or sets the parent tank.
 	/// </summary>
 	/// <value>
@@ -125,12 +150,6 @@ public class TankTowerController : MonoBehaviour {
 		
 		// Now that we've created a rotation, throw that to our other function to handle from there
 		UpdateTargetRotationFromDirectionalRotation(_workingRotation);
-		
-	/*	tower.rotation = Quaternion.RotateTowards(tower.rotation, _workingRotation, adjustmentSpeed * Time.deltaTime);
-			
-		// Restrict Rotation to Y axis
-		tower.localEulerAngles = new Vector3(0,tower.localEulerAngles.y,0);
-		_targetRotation = tower.localEulerAngles.y;*/
 	}
 	
 	/// <summary>
