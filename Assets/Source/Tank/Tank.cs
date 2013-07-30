@@ -133,10 +133,6 @@ public class Tank : Photon.MonoBehaviour  {
 		}
 	}
 	
-	
-	
-	
-	
 	public void SetTankType(TankMode type)
 	{
 		if ( type == TankMode.LocalPlayer )
@@ -153,13 +149,7 @@ public class Tank : Photon.MonoBehaviour  {
 		mode = type;
 	}
 	
-	
-	
-	
-	
-	
-	
-	void Update()
+	public void Update()
 	{	
 		
 		if ( mode == TankMode.RemotePlayer && !photonView.isMine) 
@@ -183,21 +173,6 @@ public class Tank : Photon.MonoBehaviour  {
 		}
 	}
 	
-	void LateUpdate() 
-	{
-		/*if ( canControlCamera ) 
-		{
-			if ( cameraController.mode == TankCameraController.CameraMode.MouseOrbitTarget)
-			{
-				cameraController.UpdateCamera(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
-			}
-			else
-			{
-				cameraController.ManualAim(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
-			}
-			
-		}*/
-	}
 	
 	void FixedUpdate(){
 		// Update our tracks
