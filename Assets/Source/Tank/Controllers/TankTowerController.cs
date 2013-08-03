@@ -95,6 +95,11 @@ public class TankTowerController : MonoBehaviour {
 	/// 0 degrees is looking straight forward
 	/// </remarks>
 	public float TargetRotation { get; set; }
+	
+	public Vector3 ForwardVector
+	{
+		get {  return tower.rotation * Vector3.forward; }
+	}
 	#endregion
 	
 	#region Unity Functions
@@ -117,7 +122,7 @@ public class TankTowerController : MonoBehaviour {
 	public void LateUpdate()
 	{
 		// No sense moving the tower if it's already where we need it now is there?
-		if ( TowerRotation == TargetRotation ) return;
+		if ( OnTarget ) return;
 		
 		// Slight variations per the mode the tank is operating in
 		if ( ParentTank.mode == Tank.TankMode.LocalPlayer )

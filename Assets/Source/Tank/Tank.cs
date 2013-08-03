@@ -67,7 +67,7 @@ public class Tank : Photon.MonoBehaviour  {
 			{
 				for ( int x = 0; x < fixedGunsControllers.Length; x++ )
 				{
-					fixedGunsControllers[x].UpdateTarget(value);
+					fixedGunsControllers[x].UpdateTargetRotationFromWorldPosition(value);
 				}
 			}
 			
@@ -138,7 +138,6 @@ public class Tank : Photon.MonoBehaviour  {
 		if ( type == TankMode.LocalPlayer )
 		{
 			canDrive = true;
-			
 			canFire = true;
 		}
 		else if ( type == TankMode.RemotePlayer )
@@ -166,7 +165,7 @@ public class Tank : Photon.MonoBehaviour  {
 		
 		if(canFire)
 		{
-			if ( Input.GetButtonDown("Fire1") && primaryFire != null && primaryFire.canFire )
+			if ( Input.GetButtonDown("Fire1") && primaryFire != null && primaryFire.CanFire )
 			{
 				this.photonView.RPC ("RPC_FirePrimaryWeapon", PhotonTargets.All);
 			}
@@ -249,9 +248,7 @@ public class Tank : Photon.MonoBehaviour  {
 		GameObject effect = hObjectPool.Instance.Spawn(
 			hObjectPool.Instance.GetPoolID(hitEffect), 
 			position, Quaternion.LookRotation(normal));
-		
-		
-		
+
 		if ( parent != null ) effect.transform.parent = parent;
 	}
 	
@@ -269,10 +266,10 @@ public class Tank : Photon.MonoBehaviour  {
 			{
 				for ( int x = 0; x < fixedGunsControllers.Length; x++ )
 				{
-					stream.SendNext(fixedGunsControllers[x].NetworkRotation);
+					stream.SendNext(fixedGunsControllers[x].GunHorizontalRotation);
+					stream.SendNext(fixedGunsControllers[x].GunVerticalRotation);
 				}
 			}
-			
 			
 			if ( damageRegions.Length > 0 )
 			{
@@ -294,7 +291,8 @@ public class Tank : Photon.MonoBehaviour  {
 			{
 				for ( int x = 0; x < fixedGunsControllers.Length; x++ )
 				{
-					fixedGunsControllers[x].NetworkRotation = (float)stream.ReceiveNext();
+					fixedGunsControllers[x].TargetHorizontalRotation = (float)stream.ReceiveNext();
+					fixedGunsControllers[x].TargetVerticalRotation = (float)stream.ReceiveNext();
 				}
 			}
 			

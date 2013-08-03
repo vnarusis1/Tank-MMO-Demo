@@ -7,6 +7,7 @@ public class DemoManager : Photon.MonoBehaviour
 	public Transform[] spawnPoints;
 	public Transform targetPoint;
 	
+	public bool invertMouseLook = true;
 	
 	public UILabel statusLabel;
 	public UILabel healthLabel;
@@ -183,9 +184,25 @@ public class DemoManager : Photon.MonoBehaviour
 		cameraManager.UpdateCamera(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
 		if ( cameraManager.mode == CameraManager.Mode.LookingDownSights )
 		{
+			
 			playerScript.towerController.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse X") * 0.75f);
+			
+			foreach(TankFixedGunController g in playerScript.fixedGunsControllers)
+			{
+				if ( invertMouseLook ) 
+				{
+					g.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse X") * 0.75f, Input.GetAxis("Mouse Y") * 0.75f);
+				}
+				else
+				{
+					g.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse X") * 0.75f, Input.GetAxis("Mouse Y") * -0.75f);
+				}
+				
+				
+			}
 		}
 	}
+	
 	/// <summary>
 	/// An extremely simple network setup
 	/// </summary>
