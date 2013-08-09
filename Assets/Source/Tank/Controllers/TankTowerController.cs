@@ -50,7 +50,8 @@ public class TankTowerController : MonoBehaviour {
 	public bool OnTarget
 	{
 		get { 
-			if ( TowerRotation == TargetRotation ) return true;
+			if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(TowerRotation)) == 
+					Mathf.Round(Hydrogen.Math.UnsignAngle(TargetRotation)) ) return true;
 			return false;
 		}
 	}

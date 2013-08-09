@@ -61,14 +61,26 @@ public class TankFixedGunController : MonoBehaviour {
 	public bool OnTarget
 	{
 		get { 
-			if ( GunHorizontalRotation == TargetHorizontalRotation && 
-				 GunVerticalRotation == TargetVerticalRotation ) 
+			if ( canRotateHorizontal)
 			{
-				return true;
+				if ( Hydrogen.Math.NeutralizeAngle(GunHorizontalRotation) != 
+					Mathf.Round(Hydrogen.Math.UnsignAngle(TargetHorizontalRotation) ))
+				{
+					return false;
+				}
 			}
-			return false;
+			if ( canRotateVertical )
+			{
+				if ( Hydrogen.Math.NeutralizeAngle(GunVerticalRotation) != 
+						Mathf.Round(Hydrogen.Math.UnsignAngle(TargetVerticalRotation) ))
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 	}
+	
 	
 	/// <summary>
 	/// Gets the targeting vertical difference in degrees.
@@ -80,6 +92,7 @@ public class TankFixedGunController : MonoBehaviour {
 	{
 		get { return (TargetVerticalRotation - GunVerticalRotation); }
 	}
+	
 	
 	/// <summary>
 	/// Gets the targeting horizontal difference in degrees.

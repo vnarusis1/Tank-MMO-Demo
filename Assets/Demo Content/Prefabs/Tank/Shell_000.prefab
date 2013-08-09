@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e36386fc38b42cd91d82e3c0cba27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shellForce: {x: 0, y: -70000, z: 0}
+  shellForce: {x: 0, y: -120000, z: 0}
   shellTorque: {x: 0, y: 10, z: 0}
   explosionEffects:
   - {fileID: 400000, guid: 0fe28149974e80649bf75baefe1f2343, type: 2}

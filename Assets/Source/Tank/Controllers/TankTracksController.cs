@@ -637,6 +637,35 @@ public class TankTracksController : MonoBehaviour {
 		
 	}
 	
+	public float LeftTrackSpeed
+	{
+		get { return RPMtoKMPH(leftTrackWheelData[0].col.radius,leftTrackMiddleRPM); }
+	}
+	public float RightTrackSpeed
+	{
+		get { return RPMtoKMPH(rightTrackWheelData[0].col.radius,rightTrackMiddleRPM); }
+	}
+	public float RightTrackRPM
+	{
+		get { return rightTrackMiddleRPM; }
+	}
+	public float LeftTrackRPM
+	{
+		get { return leftTrackMiddleRPM; }
+	}
+	public bool isMoving
+	{
+		get { 
+			if ( LeftTrackRPM != 0 || RightTrackRPM != 0 )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 	
 	
 	void OnGUI(){

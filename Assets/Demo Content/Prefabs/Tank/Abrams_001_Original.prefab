@@ -1280,7 +1280,7 @@ GameObject:
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400010}
   m_Layer: 0
-  m_Name: Abrams_000
+  m_Name: Abrams_001_Original
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4005,14 +4005,14 @@ MonoBehaviour:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 39.8194389
-        value: 304.734314
+      - time: 79.9568939
+        value: 329.383362
         inSlope: -16.7207794
         outSlope: -16.7207794
         tangentMode: 0
-      - time: 40.4123726
-        value: -3.0811305
-        inSlope: -519.139771
+      - time: 80
+        value: 0
+        inSlope: -7641.22754
         outSlope: 0
         tangentMode: 21
       m_PreInfinity: 2
@@ -4222,7 +4222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canRotateVertical: 1
   verticalAdjustmentSpeed: 30
-  verticallMinimumAngle: -35
+  verticallMinimumAngle: -25
   verticalMaximumAngle: 1
   verticalBoost: 9.88000011
   canRotateHorizontal: 0

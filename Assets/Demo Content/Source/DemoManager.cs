@@ -37,6 +37,7 @@ public class DemoManager : Photon.MonoBehaviour
 	{
 		_nextPing = pingTimer;
 		Screen.showCursor = false;
+		Screen.lockCursor = true;
 		crosshair.enabled = false;
 	}
 	
@@ -109,6 +110,26 @@ public class DemoManager : Photon.MonoBehaviour
 		}
 		
 		
+		// Demonstration of adjusting aiming color based on aim
+		if ( !crosshair.enabled )
+		{
+			if ( playerScript != null )
+			{
+				
+				
+				if ( playerScript.towerController.OnTarget && playerScript.fixedGunsControllers[0].OnTarget )
+				{
+					targetPoint.renderer.material = willHit;
+				}
+				else
+				{
+					targetPoint.renderer.material = wontHit;
+				}
+					
+			}
+			
+		}
+		
 		#region User Input
 		
 		// Show Server Status
@@ -137,15 +158,17 @@ public class DemoManager : Photon.MonoBehaviour
 			}
 		}
 		
+		// Lock that cursor!
 		if ( Input.GetKeyDown(KeyCode.L) )
 		{
 			if ( Screen.lockCursor )
 			{
+				Screen.showCursor = true;
 				Screen.lockCursor = false;
 			}
 			else
 			{
-			
+				Screen.showCursor = false;
 				Screen.lockCursor = true;
 			}
 		}
