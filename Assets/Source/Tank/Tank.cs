@@ -79,6 +79,7 @@ public class Tank : Photon.MonoBehaviour  {
 	{
 		get {  return transform.rotation * Vector3.forward; }
 	}
+
 	
 	
 	public void Awake()
@@ -165,7 +166,7 @@ public class Tank : Photon.MonoBehaviour  {
 		
 		if(canFire)
 		{
-			if ( Input.GetButtonDown("Fire1") && primaryFire != null && primaryFire.CanFire )
+			if ( Input.GetMouseButtonDown(0) && primaryFire != null && primaryFire.CanFire )
 			{
 				this.photonView.RPC ("RPC_FirePrimaryWeapon", PhotonTargets.All);
 			}

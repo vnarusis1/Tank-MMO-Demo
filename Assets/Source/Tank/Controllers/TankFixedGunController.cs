@@ -252,9 +252,8 @@ public class TankFixedGunController : MonoBehaviour {
 					Mathf.DeltaAngle(
 						Mathf.Atan2(ParentTank.towerController.ForwardVector.y, ParentTank.towerController.ForwardVector.z) * Mathf.Rad2Deg,
 						Mathf.Atan2(_workingVector.y, _workingVector.z) * Mathf.Rad2Deg)  * -1f,
-					
-					horizontalMinimumAngle,
-					horizontalMaximumAngle);
+					verticallMinimumAngle,
+					verticalMaximumAngle);
 		}
 			
 		
