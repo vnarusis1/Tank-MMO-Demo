@@ -708,147 +708,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 343012799}
---- !u!1 &270957487
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 270957488}
-  - 114: {fileID: 270957489}
-  m_Layer: 0
-  m_Name: Object Pool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &270957488
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 270957487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 343012799}
---- !u!114 &270957489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 270957487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e5347e8cd5a04971aa0beec56b10b9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultPreloadAmount: 15
-  defaultSpawnMore: 1
-  defaultSendMessage: 0
-  defaultHandleParticles: 1
-  defaultTrackSpawnedObjects: 1
-  defaultCullExtras: 1
-  objectPools:
-  - prefab: {fileID: 100002, guid: 1358bff305fe84183a68d1161cc036ed, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
-  - prefab: {fileID: 100000, guid: f7ef95dc7999fa0498a21b51661c0bb2, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
-  - prefab: {fileID: 100000, guid: fc78f28894a01594886eb686d0cfced5, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
-  - prefab: {fileID: 100000, guid: fc9da1647413a6649bab3e1cb3276b79, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
-  - prefab: {fileID: 100000, guid: a9d6c52fd219bd34e8889b6cbc722343, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
-  - prefab: {fileID: 100000, guid: 31b27074f8a6f8c4cbd40ff48125b4cf, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
-  - prefab: {fileID: 100000, guid: 2aecc1171ec091a4d998375ad921a11f, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
-  - prefab: {fileID: 100000, guid: 0fe28149974e80649bf75baefe1f2343, type: 2}
-    preloadAmount: 10
-    spawnMoreIfNeeded: 1
-    sendMessage: 0
-    manageParticles: 0
-    trackSpawnedObjects: 1
-    cullExtraObjects: 1
-    hasObjectPoolItem: 0
-    hasParticleSystem: 0
-    hasLegacyParticleEmitter: 0
-    hasLegacyParticleAnimator: 0
-    hasRigidbody: 0
 --- !u!1 &319581237
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,8 +763,8 @@ Transform:
   m_Children:
   - {fileID: 1244615296}
   - {fileID: 10}
+  - {fileID: 1604507119}
   - {fileID: 12}
-  - {fileID: 270957488}
   - {fileID: 1705230699}
   - {fileID: 103582590}
   - {fileID: 11}
@@ -1504,6 +1363,147 @@ MonoBehaviour:
   submitKey1: 330
   cancelKey0: 27
   cancelKey1: 331
+--- !u!1 &1604507118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1604507119}
+  - 114: {fileID: 1604507120}
+  m_Layer: 0
+  m_Name: Spawn Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1604507119
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1604507118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.71765137, y: -.83795166, z: 10.3754883}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 343012799}
+--- !u!114 &1604507120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1604507118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5347e8cd5a04971aa0beec56b10b9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultPreloadAmount: 15
+  defaultSpawnMore: 1
+  defaultSendMessage: 0
+  defaultHandleParticles: 1
+  defaultTrackSpawnedObjects: 1
+  defaultCullExtras: 1
+  objectPools:
+  - prefab: {fileID: 100002, guid: 1358bff305fe84183a68d1161cc036ed, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
+  - prefab: {fileID: 100000, guid: f7ef95dc7999fa0498a21b51661c0bb2, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
+  - prefab: {fileID: 100000, guid: fc78f28894a01594886eb686d0cfced5, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
+  - prefab: {fileID: 100000, guid: fc9da1647413a6649bab3e1cb3276b79, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
+  - prefab: {fileID: 100000, guid: a9d6c52fd219bd34e8889b6cbc722343, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
+  - prefab: {fileID: 100000, guid: 31b27074f8a6f8c4cbd40ff48125b4cf, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
+  - prefab: {fileID: 100000, guid: 2aecc1171ec091a4d998375ad921a11f, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
+  - prefab: {fileID: 100000, guid: 0fe28149974e80649bf75baefe1f2343, type: 2}
+    preloadAmount: 10
+    spawnMoreIfNeeded: 1
+    sendMessage: 0
+    manageParticles: 0
+    trackSpawnedObjects: 1
+    cullExtraObjects: 1
+    hasObjectPoolItem: 0
+    hasParticleSystem: 0
+    hasLegacyParticleEmitter: 0
+    hasLegacyParticleAnimator: 0
+    hasRigidbody: 0
 --- !u!1 &1621175337
 GameObject:
   m_ObjectHideFlags: 0
