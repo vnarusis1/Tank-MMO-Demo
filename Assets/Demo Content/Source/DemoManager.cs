@@ -36,9 +36,11 @@ public class DemoManager : Photon.MonoBehaviour
 	public void Start () 
 	{
 		_nextPing = pingTimer;
+#if !UNITY_EDITOR
 		Screen.showCursor = false;
 		Screen.lockCursor = true;
-		crosshair.enabled = false;
+#endif
+		crosshair.enabled = false;	
 	}
 	
 	public void Update()

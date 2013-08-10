@@ -51,13 +51,10 @@ public class TankTowerController : MonoBehaviour {
 	{
 		get { 
 			if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(TowerRotation)) == 
-				 Mathf.Round(Hydrogen.Math.UnsignAngle(TargetRotation)) ) 
+				 Mathf.Round(TargetRotation) ) 
 			{	
 				return true;
 			}
-				
-			
-			
 			return false;
 		}
 	}
@@ -70,7 +67,7 @@ public class TankTowerController : MonoBehaviour {
 	/// </value>
 	public float TargetingDifference
 	{
-		get { return (TargetRotation - TowerRotation); }
+		get { return (Hydrogen.Math.NeutralizeAngle(TargetRotation) - TowerRotation); }
 	}
 	
 	/// <summary>
@@ -179,10 +176,10 @@ public class TankTowerController : MonoBehaviour {
 		// Determine rotations's forward vector
 		_workingVector = rotation * Vector3.forward;
 		
-		// Signed Difference
-		TargetRotation = Mathf.DeltaAngle( 
+		// Unsigned Difference ( Rotating around Y )
+		TargetRotation = Hydrogen.Math.UnsignedAngle(Mathf.DeltaAngle( 
 			Mathf.Atan2(ParentTank.ForwardVector.x, ParentTank.ForwardVector.z) * Mathf.Rad2Deg,
-			Mathf.Atan2(_workingVector.x, _workingVector.z) * Mathf.Rad2Deg);
+			Mathf.Atan2(_workingVector.x, _workingVector.z) * Mathf.Rad2Deg));
 	}
 	
 	/// <summary>
@@ -193,7 +190,7 @@ public class TankTowerController : MonoBehaviour {
 	/// </param>
 	public void UpdateTargetRotationByDegrees(float adjustment)
 	{
-		TargetRotation += adjustment;
+		TargetRotation = Hydrogen.Math.UnsignedAngle(TargetRotation + adjustment);
 	}
 	#endregion
 }

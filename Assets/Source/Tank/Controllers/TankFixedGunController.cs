@@ -8,7 +8,6 @@ public class TankFixedGunController : MonoBehaviour {
 	public float verticalAdjustmentSpeed = 30f;
 	public float verticallMinimumAngle = -180f;
 	public float verticalMaximumAngle = 180f;
-	public float verticalBoost = 10f;
 	
 	public bool canRotateHorizontal;
 	public float horizontalAdjustmentSpeed = 30f;
@@ -33,6 +32,7 @@ public class TankFixedGunController : MonoBehaviour {
 	
 	#endregion
 	
+	private Quaternion _zerodRotation;
 	
 	public Transform gun;
 
@@ -64,7 +64,7 @@ public class TankFixedGunController : MonoBehaviour {
 			if ( canRotateHorizontal)
 			{
 				if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(GunHorizontalRotation)) != 
-						Mathf.Round(Hydrogen.Math.UnsignAngle(TargetHorizontalRotation) ))
+						Mathf.Round(TargetHorizontalRotation))
 				{
 					return false;
 				}
@@ -73,7 +73,7 @@ public class TankFixedGunController : MonoBehaviour {
 			if ( canRotateVertical )
 			{
 				if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(GunVerticalRotation)) != 
-						Mathf.Round(Hydrogen.Math.UnsignAngle(TargetVerticalRotation) ))
+						Mathf.Round(TargetVerticalRotation))
 				{
 					return false;
 				}
@@ -91,7 +91,11 @@ public class TankFixedGunController : MonoBehaviour {
 	/// </value>
 	public float TargetingVerticalDifference
 	{
-		get { return (TargetVerticalRotation - GunVerticalRotation); }
+		get { return (
+				TargetVerticalRotation- 
+				Hydrogen.Math.NeutralizeAngle(GunVerticalRotation)
+				); 
+		}
 	}
 	
 	
@@ -103,7 +107,11 @@ public class TankFixedGunController : MonoBehaviour {
 	/// </value>
 	public float TargetingHorizontalDifference
 	{
-		get { return (TargetHorizontalRotation - GunHorizontalRotation); }
+		get { return (
+				TargetHorizontalRotation - 
+				Hydrogen.Math.NeutralizeAngle(GunHorizontalRotation)
+				); 
+		}
 	}
 	
 	/// <summary>
@@ -175,6 +183,7 @@ public class TankFixedGunController : MonoBehaviour {
 		
 		// Establish base rotation to calculate angles off of
 		_workingRotation = gun.localRotation;
+		_zerodRotation = gun.localRotation;
 		TargetHorizontalRotation = gun.localEulerAngles.y;
 		TargetVerticalRotation = gun.localEulerAngles.x;
 	}
@@ -212,7 +221,6 @@ public class TankFixedGunController : MonoBehaviour {
 		}
 	}
 	#endregion
-	
 	
 	
 	#region Meat & Potatoes 
@@ -258,28 +266,43 @@ public class TankFixedGunController : MonoBehaviour {
 		// Determine rotations's forward vector
 		_workingVector = rotation * Vector3.forward;
 		
+		
+		
+		
+		
 		// Signed Difference
 		if ( canRotateVertical )
-		{
+		{	
 			TargetVerticalRotation = 
-				Hydrogen.Math.ClampAngle(
-					Mathf.DeltaAngle(
-						Mathf.Atan2(ParentTank.towerController.ForwardVector.y, ParentTank.towerController.ForwardVector.z) * Mathf.Rad2Deg,
-						Mathf.Atan2(_workingVector.y, _workingVector.z) * Mathf.Rad2Deg)  * -1f,
-					verticallMinimumAngle,
-					verticalMaximumAngle);
+				
+					Hydrogen.Math.ClampAngle(
+						Hydrogen.Math.UnsignedAngle(		
+							
+							Mathf.DeltaAngle(
+								Mathf.Atan2(ParentTank.towerController.ForwardVector.y, ParentTank.towerController.ForwardVector.z) * Mathf.Rad2Deg,
+								Mathf.Atan2(_workingVector.y, _workingVector.z) * Mathf.Rad2Deg)),
+					
+					
+						verticallMinimumAngle,
+						verticalMaximumAngle);
+			
+			Debug.Log (GunVerticalRotation.ToString() + ":" + TargetVerticalRotation.ToString());
 		}
 			
+		
+		
+		
 		
 		if ( canRotateHorizontal )
 		{
 			TargetHorizontalRotation = 
-				Hydrogen.Math.ClampAngle(
-					Mathf.DeltaAngle( 
-						Mathf.Atan2(ParentTank.towerController.ForwardVector.x, ParentTank.towerController.ForwardVector.z) * Mathf.Rad2Deg, 
-						Mathf.Atan2(_workingVector.x, _workingVector.z) * Mathf.Rad2Deg),
-					horizontalMinimumAngle,
-					horizontalMaximumAngle);
+				Hydrogen.Math.UnsignedAngle(
+					Hydrogen.Math.ClampAngle(
+						Mathf.DeltaAngle( 
+							Mathf.Atan2(ParentTank.towerController.ForwardVector.x, ParentTank.towerController.ForwardVector.z) * Mathf.Rad2Deg, 
+							Mathf.Atan2(_workingVector.x, _workingVector.z) * Mathf.Rad2Deg),
+						horizontalMinimumAngle,
+						horizontalMaximumAngle));
 		}
 	}
 	
@@ -294,21 +317,38 @@ public class TankFixedGunController : MonoBehaviour {
 	{
 		if ( canRotateHorizontal )
 		{
-			TargetHorizontalRotation = Hydrogen.Math.ClampAngle(
-				TargetHorizontalRotation + horizontalAdjustment,
-				horizontalMinimumAngle,
-				horizontalMaximumAngle);
+			TargetHorizontalRotation = 
+				
+					Hydrogen.Math.ClampAngle(
+						Hydrogen.Math.UnsignedAngle(TargetHorizontalRotation + horizontalAdjustment),
+						horizontalMinimumAngle,
+						horizontalMaximumAngle);
 		}
 
 		if ( canRotateVertical )  
 		{
-			TargetVerticalRotation = Hydrogen.Math.ClampAngle(
-				TargetVerticalRotation + verticalAdjustment,
-				verticallMinimumAngle,
-				verticalMaximumAngle);
+			TargetVerticalRotation = 
+					Hydrogen.Math.ClampAngle(
+						Hydrogen.Math.UnsignedAngle(TargetVerticalRotation + verticalAdjustment),
+						verticallMinimumAngle,
+						verticalMaximumAngle);
 		}
 	}
 	#endregion
 	
+#if UNITY_EDITOR
+	public void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay(gun.position, _workingVector * 100f);
+		
+		
+        Gizmos.color = Color.white;
+        Gizmos.DrawRay(
+			spawnLocation.position, 
+			spawnLocation.TransformDirection(-Vector3.up) * 100f
+		);
+	}
+#endif
 	
 }
