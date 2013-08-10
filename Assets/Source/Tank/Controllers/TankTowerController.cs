@@ -51,7 +51,13 @@ public class TankTowerController : MonoBehaviour {
 	{
 		get { 
 			if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(TowerRotation)) == 
-					Mathf.Round(Hydrogen.Math.UnsignAngle(TargetRotation)) ) return true;
+				 Mathf.Round(Hydrogen.Math.UnsignAngle(TargetRotation)) ) 
+			{	
+				return true;
+			}
+				
+			
+			
 			return false;
 		}
 	}
@@ -122,6 +128,7 @@ public class TankTowerController : MonoBehaviour {
 	/// </summary>
 	public void LateUpdate()
 	{
+		
 		// No sense moving the tower if it's already where we need it now is there?
 		if ( OnTarget ) return;
 		

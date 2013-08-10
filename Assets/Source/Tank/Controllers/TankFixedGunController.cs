@@ -63,15 +63,16 @@ public class TankFixedGunController : MonoBehaviour {
 		get { 
 			if ( canRotateHorizontal)
 			{
-				if ( Hydrogen.Math.NeutralizeAngle(GunHorizontalRotation) != 
-					Mathf.Round(Hydrogen.Math.UnsignAngle(TargetHorizontalRotation) ))
+				if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(GunHorizontalRotation)) != 
+						Mathf.Round(Hydrogen.Math.UnsignAngle(TargetHorizontalRotation) ))
 				{
 					return false;
 				}
 			}
+			
 			if ( canRotateVertical )
 			{
-				if ( Hydrogen.Math.NeutralizeAngle(GunVerticalRotation) != 
+				if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(GunVerticalRotation)) != 
 						Mathf.Round(Hydrogen.Math.UnsignAngle(TargetVerticalRotation) ))
 				{
 					return false;
