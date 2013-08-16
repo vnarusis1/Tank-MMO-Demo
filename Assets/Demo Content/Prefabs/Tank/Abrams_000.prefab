@@ -4221,8 +4221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjustmentSpeed: 30
-  minimumAngle: 5
-  maximumAngle: 25
+  minimumAngle: -30
+  maximumAngle: 5
   gun: {fileID: 400136}
   maximumTargetDistance: 20
   activeOrdanance: {fileID: 100002, guid: 1358bff305fe84183a68d1161cc036ed, type: 2}

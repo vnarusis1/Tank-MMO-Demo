@@ -175,6 +175,7 @@ public class TankFixedGunController : MonoBehaviour {
 	}
 
 	
+	
 	/// <summary>
 	/// Updates the TargetHorizontalRotation and TargetVerticalRotation by making adjustments based
 	/// on the specified degrees.
@@ -184,13 +185,7 @@ public class TankFixedGunController : MonoBehaviour {
 	/// </param>
 	public void UpdateTargetRotationByDegrees(float verticalAdjustment)
 	{
-		TargetRotation = 
-			
-			Hydrogen.Math.ClampAngle(
-			
-			Hydrogen.Math.UnsignedAngle(TargetRotation + verticalAdjustment), 
-			
-			minimumAngle, maximumAngle);
+		TargetRotation = Mathf.Clamp (TargetRotation + verticalAdjustment, minimumAngle, maximumAngle);
 	}
 	
 	#endregion	
