@@ -12,6 +12,9 @@ public class TankTracksController : MonoBehaviour {
 	public bool autoCOM = true;
 	public Transform COM;
 	
+	public AudioClip trackStart;
+	public AudioClip trackLoop;
+	public AudioClip trackStop;
 	
 	public float wheelsOffset = 0.4f;
 	public float bonesOffset = 0.4f;

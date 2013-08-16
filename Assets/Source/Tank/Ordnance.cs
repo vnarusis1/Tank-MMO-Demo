@@ -9,6 +9,8 @@ public class Ordnance : MonoBehaviour {
 	public float explosionRadius;
 	public float damage;
 	
+	public AudioClip[] fireClips;
+	
 	public Tank SourceTank
 	{
 		get { return _sourceTank; }
@@ -20,6 +22,11 @@ public class Ordnance : MonoBehaviour {
 	{
 		rigidbody.AddRelativeForce(shellForce);
 		rigidbody.AddRelativeTorque(shellTorque);
+		
+		SourceTank.rigidbody.AddExplosionForce(
+			shellForce.y * -5f, 
+			SourceTank.primaryFire.spawnLocation.position, 
+			explosionRadius);
 	}
 	
 	public void OnCollisionEnter(Collision collision)

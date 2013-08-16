@@ -154,8 +154,8 @@ public class TankFixedGunController : MonoBehaviour {
 		// Reset Reload Time
 		_reloadTime = reloadTime;
 		GameObject shell = hObjectPool.Instance.Spawn(activeOrdanance, spawnLocation.position, spawnLocation.rotation);
-		shell.GetComponent<Ordnance>().Launch();
 		shell.GetComponent<Ordnance>().SourceTank = ParentTank;
+		shell.GetComponent<Ordnance>().Launch();
 	}
 	
 	/// <summary>

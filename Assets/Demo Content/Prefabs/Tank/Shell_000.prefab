@@ -187,8 +187,11 @@ MonoBehaviour:
   - {fileID: 400000, guid: f7ef95dc7999fa0498a21b51661c0bb2, type: 2}
   - {fileID: 400000, guid: fc78f28894a01594886eb686d0cfced5, type: 2}
   - {fileID: 400000, guid: fc9da1647413a6649bab3e1cb3276b79, type: 2}
-  explosionRadius: 2
+  explosionRadius: 5
   damage: 50
+  fireClips:
+  - {fileID: 8300000, guid: f6fb97f59a76343278b0fbdd36d2eb79, type: 3}
+  - {fileID: 8300000, guid: ff17c256c28f1429291b3214db2e1d9c, type: 3}
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

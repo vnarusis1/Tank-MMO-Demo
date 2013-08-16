@@ -161,8 +161,9 @@ public class Tank : Photon.MonoBehaviour  {
 		if(canDrive)
 		{
 			_accelerationForce = Input.GetAxis("Vertical");
-			_steeringForce = Input.GetAxis("Horizontal");
+			_steeringForce = Input.GetAxis("Horizontal");	
 		}
+		
 		
 		if(canFire)
 		{
@@ -177,6 +178,19 @@ public class Tank : Photon.MonoBehaviour  {
 	void FixedUpdate(){
 		// Update our tracks
 		tracksController.UpdateWheels(_accelerationForce,_steeringForce);
+		
+		if ( tracksController.LeftTrackRPM != 0 || tracksController.RightTrackRPM != 0)
+		{
+			if ( !centerOfMass.audio.isPlaying )
+			{
+				centerOfMass.audio.clip = tracksController.trackLoop;
+				centerOfMass.audio.Play();
+			}
+		}
+		else
+		{
+			centerOfMass.audio.Stop();
+		}
 	}
 	
 	public void CreateExplosion(Vector3 worldPosition, Vector3 worldNormal, string explosionEffect, float radius, float damage)
@@ -184,7 +198,6 @@ public class Tank : Photon.MonoBehaviour  {
 		// Only have local tanks send out their explosions
 		if ( mode == TankMode.LocalPlayer )
 		{
-			
 			this.photonView.RPC  ("RPC_CreateExplosion",PhotonTargets.All, worldPosition, worldNormal, explosionEffect, radius, damage);
 		}
 	}
@@ -200,6 +213,11 @@ public class Tank : Photon.MonoBehaviour  {
 	public void RPC_FirePrimaryWeapon()
 	{
 		primaryFire.Fire();
+		
+		Ordnance currentRound = primaryFire.activeOrdanance.GetComponent<Ordnance>();
+		
+		primaryFire.spawnLocation.audio.PlayOneShot(
+			currentRound.fireClips[Random.Range(0, currentRound.fireClips.Length)]);
 	}
 	
 	

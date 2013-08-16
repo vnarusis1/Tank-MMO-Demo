@@ -23,6 +23,10 @@ public class TankTowerController : MonoBehaviour {
 	/// </remarks>
 	public float adjustmentSpeed = 30f;
 	
+	public AudioClip towerStart;
+	public AudioClip towerLoop;
+	public AudioClip towerStop;
+	
 	/// <summary>
 	/// Internal storage for calculations using a vector3.
 	/// </summary>
@@ -32,6 +36,7 @@ public class TankTowerController : MonoBehaviour {
 	private Vector3 _workingVector;
 	
 	private Quaternion _zerodRotation;
+	
 	
 	#endregion
 	
@@ -121,7 +126,20 @@ public class TankTowerController : MonoBehaviour {
 	{
 		
 		// No sense moving the tower if it's already where we need it now is there?
-		if ( OnTarget ) return;
+		if ( OnTarget )
+		{
+			tower.audio.Stop ();
+			return;
+		}
+		else
+		{
+			if ( !tower.audio.isPlaying )
+			{
+				tower.audio.clip = towerLoop;
+				tower.audio.Play();
+			}
+		}
+		
 		
 		// Slight variations per the mode the tank is operating in
 		if ( ParentTank.mode == Tank.TankMode.LocalPlayer )
