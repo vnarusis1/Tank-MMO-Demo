@@ -267,8 +267,7 @@ public class Tank : Photon.MonoBehaviour  {
 			{
 				for ( int x = 0; x < fixedGunsControllers.Length; x++ )
 				{
-					stream.SendNext(fixedGunsControllers[x].GunHorizontalRotation);
-					stream.SendNext(fixedGunsControllers[x].GunVerticalRotation);
+					stream.SendNext(fixedGunsControllers[x].GunRotation);
 				}
 			}
 			
@@ -292,8 +291,7 @@ public class Tank : Photon.MonoBehaviour  {
 			{
 				for ( int x = 0; x < fixedGunsControllers.Length; x++ )
 				{
-					fixedGunsControllers[x].TargetHorizontalRotation = (float)stream.ReceiveNext();
-					fixedGunsControllers[x].TargetVerticalRotation = (float)stream.ReceiveNext();
+					fixedGunsControllers[x].TargetRotation = (float)stream.ReceiveNext();
 				}
 			}
 			

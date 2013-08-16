@@ -216,11 +216,11 @@ public class DemoManager : Photon.MonoBehaviour
 			{
 				if ( invertMouseLook ) 
 				{
-					g.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse X") * 0.75f, Input.GetAxis("Mouse Y") * 0.75f);
+					g.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse Y") * 0.75f);
 				}
 				else
 				{
-					g.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse X") * 0.75f, Input.GetAxis("Mouse Y") * -0.75f);
+					g.UpdateTargetRotationByDegrees(Input.GetAxis("Mouse Y") * -0.75f);
 				}
 				
 				

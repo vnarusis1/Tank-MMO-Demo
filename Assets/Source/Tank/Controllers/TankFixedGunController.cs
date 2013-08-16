@@ -4,23 +4,9 @@ using System.Collections;
 public class TankFixedGunController : MonoBehaviour {
 	
 	#region Members
-	public bool canRotateVertical;
-	public float verticalAdjustmentSpeed = 30f;
-	public float verticallMinimumAngle = -180f;
-	public float verticalMaximumAngle = 180f;
-	
-	public bool canRotateHorizontal;
-	public float horizontalAdjustmentSpeed = 30f;
-	public float horizontalMinimumAngle = -180f;
-	public float horizontalMaximumAngle = 180f;
-	
-	/// <summary>
-	/// Internal storage for calculations using a quaternion.
-	/// </summary>
-	/// <remarks>
-	/// Helps with GC management
-	/// </remarks>
-	private Quaternion _workingRotation;
+	public float adjustmentSpeed = 30f;
+	public float minimumAngle = -180f;
+	public float maximumAngle = 180f;
 	
 	/// <summary>
 	/// Internal storage for calculations using a vector3.
@@ -29,10 +15,11 @@ public class TankFixedGunController : MonoBehaviour {
 	/// Helps with GC management
 	/// </remarks>
 	private Vector3 _workingVector;
+	private Quaternion _workingRotation;
+	
 	
 	#endregion
 	
-	private Quaternion _zerodRotation;
 	
 	public Transform gun;
 
@@ -61,27 +48,14 @@ public class TankFixedGunController : MonoBehaviour {
 	public bool OnTarget
 	{
 		get { 
-			if ( canRotateHorizontal)
-			{
-				if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(GunHorizontalRotation)) != 
-						Mathf.Round(TargetHorizontalRotation))
-				{
-					return false;
-				}
-			}
 			
-			if ( canRotateVertical )
+			if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(GunRotation)) != Mathf.Round(TargetRotation))
 			{
-				if ( Mathf.Round(Hydrogen.Math.NeutralizeAngle(GunVerticalRotation)) != 
-						Mathf.Round(TargetVerticalRotation))
-				{
 					return false;
-				}
 			}
 			return true;
 		}
 	}
-	
 	
 	/// <summary>
 	/// Gets the targeting vertical difference in degrees.
@@ -89,28 +63,11 @@ public class TankFixedGunController : MonoBehaviour {
 	/// <value>
 	/// The targeting vertical difference.
 	/// </value>
-	public float TargetingVerticalDifference
+	public float TargetingDifference
 	{
-		get { return (
-				TargetVerticalRotation- 
-				Hydrogen.Math.NeutralizeAngle(GunVerticalRotation)
-				); 
-		}
-	}
-	
-	
-	/// <summary>
-	/// Gets the targeting horizontal difference in degrees.
-	/// </summary>
-	/// <value>
-	/// The targeting horizontal difference.
-	/// </value>
-	public float TargetingHorizontalDifference
-	{
-		get { return (
-				TargetHorizontalRotation - 
-				Hydrogen.Math.NeutralizeAngle(GunHorizontalRotation)
-				); 
+		get 
+		{ 
+			return (TargetRotation - Hydrogen.Math.NeutralizeAngle(GunRotation)); 
 		}
 	}
 	
@@ -123,23 +80,12 @@ public class TankFixedGunController : MonoBehaviour {
 	public Tank ParentTank { get; set; }
 	
 	/// <summary>
-	/// Gets the current gun horizontal rotation in degrees.
-	/// </summary>
-	/// <value>
-	/// The gun horizontal rotation in degrees, based on 0 degrees looking straight forward.
-	/// </value>
-	public float GunHorizontalRotation
-	{
-		get { return gun.localEulerAngles.y; }
-	}
-	
-	/// <summary>
 	/// Gets the current gun vertical rotation in degrees.
 	/// </summary>
 	/// <value>
 	/// The gun vertical rotation in degrees, based on 0 degrees looking straight forward.
 	/// </value>
-	public float GunVerticalRotation
+	public float GunRotation
 	{
 		get { return gun.localEulerAngles.x; }
 	}
@@ -153,19 +99,8 @@ public class TankFixedGunController : MonoBehaviour {
 	/// <remarks>
 	/// 0 degrees is looking straight forward
 	/// </remarks>
-	public float TargetVerticalRotation { get; set; }
-	
-	/// <summary>
-	/// Gets or sets the target horizontal rotation in degrees.
-	/// </summary>
-	/// <value>
-	/// The target rotation in degrees.
-	/// </value>
-	/// <remarks>
-	/// 0 degrees is looking straight forward
-	/// </remarks>
-	public float TargetHorizontalRotation { get; set; }
-	
+	public float TargetRotation { get; set; }
+
 	public Vector3 ForwardVector
 	{
 		get {  return gun.rotation * Vector3.forward; }
@@ -182,10 +117,7 @@ public class TankFixedGunController : MonoBehaviour {
 		if ( gun == null ) gun = gameObject.transform;
 		
 		// Establish base rotation to calculate angles off of
-		_workingRotation = gun.localRotation;
-		_zerodRotation = gun.localRotation;
-		TargetHorizontalRotation = gun.localEulerAngles.y;
-		TargetVerticalRotation = gun.localEulerAngles.x;
+		TargetRotation = gun.localEulerAngles.x;
 	}
 	
 	/// <summary>
@@ -206,22 +138,15 @@ public class TankFixedGunController : MonoBehaviour {
 		if ( ParentTank.mode == Tank.TankMode.LocalPlayer )
 		{
 			// Rotate the gun to the target rotation (interpolated) based on the adjustment speed
-			gun.localEulerAngles = new Vector3(
-				Mathf.MoveTowardsAngle (GunVerticalRotation, TargetVerticalRotation, Time.deltaTime * verticalAdjustmentSpeed), 
-				Mathf.MoveTowardsAngle (GunHorizontalRotation, TargetHorizontalRotation, Time.deltaTime * horizontalAdjustmentSpeed),
-				0f);
+			gun.localEulerAngles = new Vector3(Mathf.MoveTowardsAngle(GunRotation, TargetRotation, Time.deltaTime * adjustmentSpeed), 0f, 0f);
 		}
 		else
 		{
 			// Rotate the gun to the target rotation (interpolated), smoothing out network jitter
-			gun.localEulerAngles = new Vector3(
-				Mathf.LerpAngle(GunVerticalRotation, TargetVerticalRotation, Time.deltaTime * 5),
-				Mathf.LerpAngle(GunHorizontalRotation, TargetHorizontalRotation, Time.deltaTime * 5),
-				0f);
+			gun.localEulerAngles = new Vector3(Mathf.LerpAngle(GunRotation, TargetRotation, Time.deltaTime * 5), 0f, 0f);
 		}
 	}
 	#endregion
-	
 	
 	#region Meat & Potatoes 
 	public void Fire()
@@ -233,78 +158,22 @@ public class TankFixedGunController : MonoBehaviour {
 		shell.GetComponent<Ordnance>().SourceTank = ParentTank;
 	}
 	
-	
 	/// <summary>
-	/// Updates the TargetHorizontalRotation and TargetVerticalRotation to face a designated world position
+	/// Updates the TargetRotatiob to face a designated world position
 	/// </summary>
 	/// <param name='worldPosition'>
 	/// World position.
 	/// </param>
 	public void UpdateTargetRotationFromWorldPosition(Vector3 worldPosition)
 	{
-		// Calculate direction from tower to the worldPosition
-		_workingVector = worldPosition - gun.position;
-		
-		// Create a rotation to represent that direction
-		_workingRotation = Quaternion.LookRotation(_workingVector, Vector3.up);
-		
-		// Now that we've created a rotation, throw that to our other function to handle from there
-		UpdateTargetRotationFromDirectionalRotation(_workingRotation);
+		//find the vector pointing from our position to the target
+	    _workingVector = (worldPosition - gun.position);
+	 
+		TargetRotation = 
+			Quaternion.LookRotation(_workingVector, Vector3.up).eulerAngles.x +
+			Quaternion.LookRotation(worldPosition - ParentTank.transform.position, Vector3.up).eulerAngles.x;
 	}
-	
-	/// <summary>
-	/// Updates the TargetHorizontalRotation and TargetVerticalRotation from a directional rotation.
-	/// </summary>
-	/// <remarks>
-	/// A camera's transform's rotation for example
-	/// </remarks>
-	/// <param name='rotation'>
-	/// Rotation.
-	/// </param>
-	public void UpdateTargetRotationFromDirectionalRotation(Quaternion rotation)
-	{
-		// Determine rotations's forward vector
-		_workingVector = rotation * Vector3.forward;
-		
-		
-		
-		
-		
-		// Signed Difference
-		if ( canRotateVertical )
-		{	
-			TargetVerticalRotation = 
-				
-					Hydrogen.Math.ClampAngle(
-						Hydrogen.Math.UnsignedAngle(		
-							
-							Mathf.DeltaAngle(
-								Mathf.Atan2(ParentTank.towerController.ForwardVector.y, ParentTank.towerController.ForwardVector.z) * Mathf.Rad2Deg,
-								Mathf.Atan2(_workingVector.y, _workingVector.z) * Mathf.Rad2Deg)),
-					
-					
-						verticallMinimumAngle,
-						verticalMaximumAngle);
-			
-			Debug.Log (GunVerticalRotation.ToString() + ":" + TargetVerticalRotation.ToString());
-		}
-			
-		
-		
-		
-		
-		if ( canRotateHorizontal )
-		{
-			TargetHorizontalRotation = 
-				Hydrogen.Math.UnsignedAngle(
-					Hydrogen.Math.ClampAngle(
-						Mathf.DeltaAngle( 
-							Mathf.Atan2(ParentTank.towerController.ForwardVector.x, ParentTank.towerController.ForwardVector.z) * Mathf.Rad2Deg, 
-							Mathf.Atan2(_workingVector.x, _workingVector.z) * Mathf.Rad2Deg),
-						horizontalMinimumAngle,
-						horizontalMaximumAngle));
-		}
-	}
+
 	
 	/// <summary>
 	/// Updates the TargetHorizontalRotation and TargetVerticalRotation by making adjustments based
@@ -313,30 +182,20 @@ public class TankFixedGunController : MonoBehaviour {
 	/// <param name='adjustment'>
 	/// Degree adjustment
 	/// </param>
-	public void UpdateTargetRotationByDegrees(float horizontalAdjustment, float verticalAdjustment)
+	public void UpdateTargetRotationByDegrees(float verticalAdjustment)
 	{
-		if ( canRotateHorizontal )
-		{
-			TargetHorizontalRotation = 
-				
-					Hydrogen.Math.ClampAngle(
-						Hydrogen.Math.UnsignedAngle(TargetHorizontalRotation + horizontalAdjustment),
-						horizontalMinimumAngle,
-						horizontalMaximumAngle);
-		}
-
-		if ( canRotateVertical )  
-		{
-			TargetVerticalRotation = 
-					Hydrogen.Math.ClampAngle(
-						Hydrogen.Math.UnsignedAngle(TargetVerticalRotation + verticalAdjustment),
-						verticallMinimumAngle,
-						verticalMaximumAngle);
-		}
+		TargetRotation = 
+			
+			Hydrogen.Math.ClampAngle(
+			
+			Hydrogen.Math.UnsignedAngle(TargetRotation + verticalAdjustment), 
+			
+			minimumAngle, maximumAngle);
 	}
-	#endregion
 	
-#if UNITY_EDITOR
+	#endregion	
+	
+	#if UNITY_EDITOR
 	public void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
@@ -349,6 +208,5 @@ public class TankFixedGunController : MonoBehaviour {
 			spawnLocation.TransformDirection(-Vector3.up) * 100f
 		);
 	}
-#endif
-	
+	#endif
 }

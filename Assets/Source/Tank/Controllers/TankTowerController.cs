@@ -24,20 +24,15 @@ public class TankTowerController : MonoBehaviour {
 	public float adjustmentSpeed = 30f;
 	
 	/// <summary>
-	/// Internal storage for calculations using a quaternion.
-	/// </summary>
-	/// <remarks>
-	/// Helps with GC management
-	/// </remarks>
-	private Quaternion _workingRotation;
-	
-	/// <summary>
 	/// Internal storage for calculations using a vector3.
 	/// </summary>
 	/// <remarks>
 	/// Helps with GC management
 	/// </remarks>
 	private Vector3 _workingVector;
+	
+	private Quaternion _zerodRotation;
+	
 	#endregion
 	
 	#region Properties
@@ -116,7 +111,6 @@ public class TankTowerController : MonoBehaviour {
 		if ( tower == null ) tower = gameObject.transform;
 		
 		// Make the targets the current rotations (just makes life easier) 
-		_workingRotation = tower.localRotation;
 		TargetRotation = tower.localEulerAngles.y;
 	}
 	
@@ -155,31 +149,13 @@ public class TankTowerController : MonoBehaviour {
 		// Calculate direction from tower to the worldPosition
 		_workingVector = worldPosition - tower.position;
 		
-		// Create a rotation to represent that direction
-		_workingRotation = Quaternion.LookRotation(_workingVector, Vector3.up);
-		
-		// Now that we've created a rotation, throw that to our other function to handle from there
-		UpdateTargetRotationFromDirectionalRotation(_workingRotation);
-	}
-	
-	/// <summary>
-	/// Updates the TargetRotation from a directional rotation.
-	/// </summary>
-	/// <remarks>
-	/// A camera's transform's rotation for example
-	/// </remarks>
-	/// <param name='rotation'>
-	/// Rotation.
-	/// </param>
-	public void UpdateTargetRotationFromDirectionalRotation(Quaternion rotation)
-	{
-		// Determine rotations's forward vector
-		_workingVector = rotation * Vector3.forward;
-		
 		// Unsigned Difference ( Rotating around Y )
-		TargetRotation = Hydrogen.Math.UnsignedAngle(Mathf.DeltaAngle( 
-			Mathf.Atan2(ParentTank.ForwardVector.x, ParentTank.ForwardVector.z) * Mathf.Rad2Deg,
-			Mathf.Atan2(_workingVector.x, _workingVector.z) * Mathf.Rad2Deg));
+		TargetRotation = Hydrogen.Math.UnsignedAngle(
+			Mathf.DeltaAngle( 
+				Mathf.Atan2(ParentTank.ForwardVector.x, ParentTank.ForwardVector.z) * Mathf.Rad2Deg,
+				Mathf.Atan2(_workingVector.x, _workingVector.z) * Mathf.Rad2Deg
+			)
+		);
 	}
 	
 	/// <summary>
