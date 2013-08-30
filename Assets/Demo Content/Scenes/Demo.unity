@@ -332,7 +332,7 @@ MonoBehaviour:
   mode: 0
   orbit: {fileID: 0}
   targetDistance: 10
-  horizontalSpeed: 250
+  horizontalSpeed: 120
   verticalSpeed: 120
   verticalMinimum: -20
   verticalMaximum: 80
@@ -655,59 +655,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1705230699}
---- !u!1 &103582586
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 103582590}
-  - 33: {fileID: 103582589}
-  - 23: {fileID: 103582587}
-  m_Layer: 0
-  m_Name: Target Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!23 &103582587
-Renderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 103582586}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: 760128fd962404274ad785902ae07401, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
---- !u!33 &103582589
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 103582586}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &103582590
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 103582586}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1163.25342, y: -230.112671, z: -1813.4021}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 343012799}
 --- !u!1 &319581237
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,7 +713,6 @@ Transform:
   - {fileID: 12}
   - {fileID: 1604507119}
   - {fileID: 1705230699}
-  - {fileID: 103582590}
   - {fileID: 11}
   - {fileID: 822570305}
   - {fileID: 9}
@@ -786,11 +732,11 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 38427313}
   - {fileID: 319581238}
-  targetPoint: {fileID: 103582590}
   invertMouseLook: 0
   statusLabel: {fileID: 597488848}
   healthLabel: {fileID: 566073292}
-  crosshair: {fileID: 1394664374}
+  crosshairOuter: {fileID: 1394664374}
+  crosshairInner: {fileID: 1308827078}
   cameraManager: {fileID: 22}
   playerScript: {fileID: 0}
   pingTimer: 5
@@ -954,7 +900,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 608874770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -369.01062, y: -179.999969, z: -15.1885986}
+  m_LocalPosition: {x: -368.99411, y: -224.000229, z: -15.1757803}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2135783393}
@@ -1070,18 +1016,18 @@ MonoBehaviour:
   widgetsAreStatic: 0
   cullWhileDragging: 0
   worldToLocal:
-    e00: 180
+    e00: 223.999985
     e01: 0
     e02: 0
     e03: .046875
     e10: 0
-    e11: 180
+    e11: 223.999985
     e12: 0
     e13: 0
     e20: 0
     e21: 0
-    e22: 180
-    e23: .0625
+    e22: 223.999985
+    e23: .09375
     e30: 0
     e31: 0
     e32: 0
@@ -1115,7 +1061,7 @@ Transform:
   m_GameObject: {fileID: 822570304}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1163.25366, y: -230.112671, z: -1813.40247}
-  m_LocalScale: {x: .00555555569, y: .00555555569, z: .00555555569}
+  m_LocalScale: {x: .00446428591, y: .00446428591, z: .00446428591}
   m_Children:
   - {fileID: 1418883130}
   - {fileID: 744297091}
@@ -1221,6 +1167,56 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!1 &1308827076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1308827077}
+  - 114: {fileID: 1308827078}
+  m_Layer: 8
+  m_Name: Inner Crosshair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1308827077
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1308827076}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .400000006, y: .400000006, z: .999935925}
+  m_Children: []
+  m_Father: {fileID: 1621175338}
+--- !u!114 &1308827078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1308827076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mMat: {fileID: 2100000, guid: 9385b92aa890641948462e661eef79ae, type: 2}
+  mTex: {fileID: 2800000, guid: d4b95b2b788eb4ff6ad8f6706bbcba02, type: 3}
+  mColor: {r: .0941176489, g: 1, b: 0, a: .894117653}
+  mPivot: 4
+  mDepth: 1
+  mAtlas: {fileID: 11400000, guid: 0e7fec31264ed47ec9fc5836784bb91b, type: 2}
+  mSpriteName: crosshair_000_inner
+  mFillCenter: 1
+  mType: 0
+  mFillDirection: 4
+  mFillAmount: 1
+  mInvert: 0
 --- !u!1 &1394664372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,7 +1227,7 @@ GameObject:
   - 4: {fileID: 1394664373}
   - 114: {fileID: 1394664374}
   m_Layer: 8
-  m_Name: Crosshair
+  m_Name: Outer Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1245,7 +1241,7 @@ Transform:
   m_GameObject: {fileID: 1394664372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.20000005, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1621175338}
 --- !u!114 &1394664374
@@ -1254,18 +1250,18 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1394664372}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mMat: {fileID: 2100000, guid: 9385b92aa890641948462e661eef79ae, type: 2}
   mTex: {fileID: 2800000, guid: d4b95b2b788eb4ff6ad8f6706bbcba02, type: 3}
-  mColor: {r: 0, g: 1, b: .296551704, a: 1}
+  mColor: {r: .0941176489, g: 1, b: 0, a: .894117653}
   mPivot: 4
   mDepth: 0
   mAtlas: {fileID: 11400000, guid: 0e7fec31264ed47ec9fc5836784bb91b, type: 2}
-  mSpriteName: crosshair_003
+  mSpriteName: crosshair_000_outer
   mFillCenter: 1
   mType: 0
   mFillDirection: 4
@@ -1531,6 +1527,7 @@ Transform:
   m_LocalScale: {x: 128, y: 126, z: 1}
   m_Children:
   - {fileID: 1394664373}
+  - {fileID: 1308827077}
   m_Father: {fileID: 744297091}
 --- !u!114 &1621175339
 MonoBehaviour:
@@ -1644,6 +1641,10 @@ Prefab:
       propertyPath: sunTransform
       value: 
       objectReference: {fileID: 10}
+    - target: {fileID: 11400004, guid: 6a4d3a0ba464b45608fb95db6d699607, type: 2}
+      propertyPath: horizontalSpeed
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a4d3a0ba464b45608fb95db6d699607, type: 2}
   m_RootGameObject: {fileID: 8}
@@ -1672,7 +1673,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1873751915}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 369.008789, y: -180, z: -13.9746094}
+  m_LocalPosition: {x: 369.003876, y: -223.999985, z: -13.9726553}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1775241334}

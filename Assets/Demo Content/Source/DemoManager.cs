@@ -5,13 +5,13 @@ public class DemoManager : Photon.MonoBehaviour
 {
 	public Transform tankPrefab;
 	public Transform[] spawnPoints;
-	public Transform targetPoint;
 	
 	public bool invertMouseLook = true;
 	
 	public UILabel statusLabel;
 	public UILabel healthLabel;
-	public UISprite crosshair;
+	public UISprite crosshairOuter;
+	public UISprite crosshairInner;
 	public CameraManager cameraManager;
 	
 	
@@ -40,7 +40,8 @@ public class DemoManager : Photon.MonoBehaviour
 		Screen.showCursor = false;
 		Screen.lockCursor = true;
 #endif
-		crosshair.enabled = false;	
+		crosshairOuter.enabled = false;	
+		crosshairInner.enabled = false;
 	}
 	
 	public void Update()
@@ -80,58 +81,28 @@ public class DemoManager : Photon.MonoBehaviour
 		
 		if ( playerScript != null ) 
 		{
-			if ( cameraManager.mode == CameraManager.Mode.LookingDownSights )
+			if ( !crosshairInner.enabled || !crosshairOuter.enabled )
 			{
-				crosshair.enabled = true;
-				targetPoint.gameObject.SetActive(false);
+				crosshairOuter.enabled = true;
+				crosshairInner.enabled = true;
 			}
-			else
+			
+			// Targeting Update
+			targetRay = cameraManager.TargetCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+		
+			if (Physics.Raycast(targetRay, out targetRayHit, 
+				float.PositiveInfinity,
+				//playerScript.primaryFire.maximumTargetDistance + playerScript.cameraController.targetDistance, 
+				targetableLayers))
 			{
-				
-				crosshair.enabled = false;
-				targetPoint.gameObject.SetActive(true);
-				
-				// Targeting Update
-				if ( playerScript != null )
-				{
-		
-					targetRay = cameraManager.TargetCamera.ScreenPointToRay(Input.mousePosition);
-		
-					if (Physics.Raycast(targetRay, out targetRayHit, 
-						float.PositiveInfinity,
-						//playerScript.primaryFire.maximumTargetDistance + playerScript.cameraController.targetDistance, 
-						targetableLayers))
-					{
-						targetPoint.position = targetRayHit.point;
-						
-					}
+				playerScript.TargetedWorldPosition = targetRayHit.point;
+			}
 					
-					playerScript.TargetedWorldPosition = targetPoint.position;
-				}
-			}
-		}
-		
-		
-		// Demonstration of adjusting aiming color based on aim
-		if ( !crosshair.enabled )
-		{
-			if ( playerScript != null )
-			{
-				
-				
-				if ( playerScript.towerController.OnTarget && playerScript.fixedGunsControllers[0].OnTarget )
-				{
-					targetPoint.renderer.material = willHit;
-				}
-				else
-				{
-					targetPoint.renderer.material = wontHit;
-				}
 					
-			}
 			
 		}
 		
+	
 		#region User Input
 		
 		// Show Server Status

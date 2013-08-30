@@ -44,13 +44,13 @@ MonoBehaviour:
     outer:
       serializedVersion: 2
       x: 0
-      y: 296
+      y: 95
       width: 498
       height: 216
     inner:
       serializedVersion: 2
       x: 0
-      y: 296
+      y: 95
       width: 498
       height: 216
     rotated: 0
@@ -58,60 +58,42 @@ MonoBehaviour:
     paddingRight: .0220883526
     paddingTop: .013888889
     paddingBottom: .171296299
-  - name: crosshair_003
+  - name: crosshair_000_inner
+    outer:
+      serializedVersion: 2
+      x: 499
+      y: 168
+      width: 174
+      height: 143
+    inner:
+      serializedVersion: 2
+      x: 499
+      y: 168
+      width: 174
+      height: 143
+    rotated: 0
+    paddingLeft: .235632181
+    paddingRight: .235632181
+    paddingTop: .391608387
+    paddingBottom: .398601413
+  - name: crosshair_000_outer
     outer:
       serializedVersion: 2
       x: 0
-      y: 169
-      width: 128
-      height: 126
+      y: 312
+      width: 697
+      height: 200
     inner:
       serializedVersion: 2
       x: 0
-      y: 169
-      width: 128
-      height: 126
+      y: 312
+      width: 697
+      height: 200
     rotated: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: .0158730168
-  - name: crosshair_002
-    outer:
-      serializedVersion: 2
-      x: 0
-      y: 42
-      width: 128
-      height: 126
-    inner:
-      serializedVersion: 2
-      x: 0
-      y: 42
-      width: 128
-      height: 126
-    rotated: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: .0158730168
-  - name: crosshair_001
-    outer:
-      serializedVersion: 2
-      x: 129
-      y: 169
-      width: 128
-      height: 126
-    inner:
-      serializedVersion: 2
-      x: 129
-      y: 169
-      width: 128
-      height: 126
-    rotated: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: .0158730168
+    paddingLeft: .23385939
+    paddingRight: .235294119
+    paddingTop: 2.06500006
+    paddingBottom: 2.05500007
   mCoordinates: 0
   mPixelSize: 1
   mReplacement: {fileID: 0}
